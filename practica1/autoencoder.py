@@ -88,6 +88,6 @@ ax.scatter(df.index[df['is_anomaly']], df['value'][df['is_anomaly']], color='red
 ax.legend()
 ax.set_xlabel('Timestamp')
 ax.set_ylabel('Temperature')
-ax.set_title('Temperature with Anomalies Highlighted')
+ax.set_title('Temperature with Autoencoder')
 ax.grid(True)
 plt.show()
