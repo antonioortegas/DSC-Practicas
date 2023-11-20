@@ -1,3 +1,4 @@
+# Import necessary libraries
 import os
 import numpy as np
 import pandas as pd
@@ -6,18 +7,18 @@ from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import MinMaxScaler
 import joblib
 
-# Load the data from the CSV file "datos.csv"
+# Load time series data from the CSV file "datos.csv"
 df = pd.read_csv("practica1/datos.csv", parse_dates=True, index_col=0)
 
-# Normalize the data so that all values are between 0 and 1
+# Normalize the data to have values between 0 and 1
 scaler = MinMaxScaler()
 df_scaled = scaler.fit_transform(df)
 
-# Choose the number of time steps (n_steps) and the number of features (n_features)
+# Define parameters for time series sequences
 n_steps = 25
 n_features = 1
 
-# Create the time series sequences
+# Create time series sequences using a sliding window approach
 def split_sequence(sequence, n_steps):
     X, y = list(), list()
     for i in range(len(sequence)):
@@ -31,19 +32,19 @@ def split_sequence(sequence, n_steps):
 
 X, y = split_sequence(df_scaled, n_steps)
 
-# Reshape the data for Isolation Forest
+# Reshape the data for input to the Isolation Forest model
 X = X.reshape((X.shape[0], X.shape[1] * n_features))
 
-# Train the Isolation Forest model
+# Train or load the Isolation Forest model
 model_filename = "practica1/isolationforest.joblib"
 if os.path.exists(model_filename):
     clf = joblib.load(model_filename)
 else:
-    clf = IsolationForest(verbose=1, contamination=0.03) # I have tried different values for contamination, and 0.02 seems to be the most appropriate
+    clf = IsolationForest(verbose=1, contamination=0.03)  # Experimentally determined contamination value
     clf.fit(X)
     joblib.dump(clf, model_filename)
 
-# Make predictions with the trained model
+# Make predictions with the trained Isolation Forest model
 y_pred = clf.predict(X)
 
 # Identify anomalies (outliers)
@@ -53,7 +54,7 @@ anomalies = np.where(y_pred == -1)[0]
 df['is_anomaly_iforest'] = False
 df.loc[df.index.isin(df.index[anomalies]), 'is_anomaly_iforest'] = True
 
-# Print the anomalies detected (their dates) as a single column
+# Print the detected anomalies (dates) and the number of anomalies
 print("El número de anomalías detectadas con Isolation Forest es: ", len(anomalies))
 anomaly_list_iforest = df[df['is_anomaly_iforest']].index.to_list()
 for i in anomaly_list_iforest:
