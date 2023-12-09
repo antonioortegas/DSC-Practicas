@@ -39,7 +39,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
     depends_on:
-      - redislabs/redistimeseries
+      - redis
     environment:
       GF_INSTALL_PLUGINS: redis-datasource
     networks:
