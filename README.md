@@ -20,13 +20,13 @@ El propósito principal de esta práctica es desarrollar y aplicar modelos de Ma
 
 ## Practica 2
 
-El propósito principal de esta práctica es una introducción a Docker. Crearemos una imagen de Docker con un modelo de Machine Learning y la desplegaremos en un contenedor. El modelo de Machine Learning será el mismo que el de la práctica 1.
+El propósito principal de esta práctica es una introducción a Docker (Comandos básicos, creación de contenedores, fichero compose, swarms...). Crearemos una imagen de Docker con un modelo de Machine Learning y la desplegaremos en un contenedor. El modelo de Machine Learning será el mismo que el de la práctica 1.
 La idea es que el modelo de Machine Learning se ejecute en un contenedor de Docker, y que se pueda acceder a él a través de una API REST. Podremos consultar los datos almacenados, introducir nuevos datos y obtener predicciones.
 La imagen de Docker se creará a partir de un Dockerfile, desde la imagen base de Python.
 Para el desarrolo de nuestra aplicación, utilizaremos Flask, que es un framework de Python para crear aplicaciones web.
 Durante el proceso de desarrollo, se ha utilizado un contenedor de Redis preexistente, preparado para tratar con datos de series temporales, por lo que nos hemos centrado en el desarrollo de la aplicación web y en la conexión con el contenedor de Redis.
 También usamos Grafana para visualizar los datos de Redis.
-Por último, se ha utilizado un visualizador de contenedores para compronbar que todo funciona correctamente.
+Por último, se ha utilizado un visualizador de contenedores para comprobar que todo funciona correctamente.
 
 **Instrucciones para ejecutar el código:**
 
