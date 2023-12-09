@@ -1,0 +1,108 @@
+/* Example CSS styles based on the assigned classes */
+.list-btn {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.reset-btn {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.new-value-input {
+    border: 1px solid #2ecc71;
+}
+
+.submit-btn {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.detect-input {
+    border: 1px solid #2ecc71;
+}
+
+.detect-btn {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.add-random-btn {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+
+button {
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    vertical-align: middle;
+    border: 1px solid;
+    border-radius: 6px;
+    color: #ffffff;
+    background-color: #2ea44f;
+    border-color: #1b1f2326;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+    transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition-property: color, background-color, border-color;
+    
+}
+button:hover {
+    background-color: #5c5c5c;
+    border-color: #1b1f2326;
+    transition-duration: 0.1s;
+}
+
+form {
+    padding: 5px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #24292e;
+    vertical-align: middle;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    outline: none;
+    box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+    :focus{
+        border-color: #0366d6;
+        outline: none;
+        box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 150px;
+    box-sizing: border-box;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+div > * {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

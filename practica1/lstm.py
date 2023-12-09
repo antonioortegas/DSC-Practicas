@@ -1,5 +1,6 @@
 # Import necessary libraries
 import os
+import joblib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -24,7 +25,7 @@ scaler = MinMaxScaler()  # Create MinMaxScaler object
 df_scaled = scaler.fit_transform(df)
 
 # Define parameters for time series sequences
-n_steps = 25
+n_steps = 10
 n_features = 1
 
 # Create time series sequences using a sliding window approach
@@ -40,6 +41,7 @@ def split_sequence(sequence, n_steps):
     return np.array(X), np.array(y)
 
 X, y = split_sequence(df_scaled, n_steps)
+print(X)
 
 # Reshape the data for input to LSTM model
 X = X.reshape((X.shape[0], X.shape[1], n_features))
@@ -55,16 +57,18 @@ model.compile(optimizer='adam', loss='mse')
 
 # Check if the model has been trained and saved to disk; if not, train and save it
 model_filename = "lstm"
-path = "practica1/" + model_filename + ".keras"
+path = "practica1/" + model_filename + ".h5"
 if os.path.exists(path):
     model = tf.keras.models.load_model(path)
 else:
     early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
     history = model.fit(X, y, epochs=100, validation_data=(X, y), callbacks=[early_stopping], verbose=1)
     model.save(path)
+    joblib.dump(scaler, "practica1/scaler.pkl")
 
 # Predict values using the trained model
 y_pred = model.predict(X)
+print(y_pred)
 
 # Calculate mean absolute error (MAE)
 mae = tf.keras.metrics.mean_absolute_error(y, y_pred).numpy()
@@ -72,6 +76,11 @@ mae = tf.keras.metrics.mean_absolute_error(y, y_pred).numpy()
 # Calculate z-scores for anomalies detection
 z_scores = (mae - np.mean(mae)) / np.std(mae)
 threshold_z_score = 3.0
+print("Z_SCORES" + "\n")
+print(z_scores.shape)
+print(mae.shape)
+print(np.mean(mae))
+print(np.std(mae))
 
 # Detect anomalies based on z-scores
 anomalies = np.where(z_scores[n_steps - 1:] > threshold_z_score)[0] + n_steps

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+    <title>Anomaly Detector</title>
+</head>
+<body>
+    <div>
+        <h1>Welcome to the Anomaly Detector</h1>
+        <h2>Antonio Ortega Santaolalla</h2>
+        <h3>[ Introduction to Docker ]</h3>
+
+        <div id="hostname"></div>
+    
+        <button class="list-btn" onclick="listValues()">List All Values</button>
+        <button class="add-random-btn" onclick="addRandomValues()">Add 100 Random Temperature Values</button>
+    
+        <form id="new-value-form" onsubmit="return addNewValue();">
+            <label for="dato">Enter a new temperature value:</label>
+            <input type="text" id="dato" name="dato" class="new-value-input" required oninput="validateInput(event)">
+            <button type="submit" class="submit-btn">Add</button>
+        </form>
+    
+        <form id="detect-form" onsubmit="return detectAnomaly();">
+            <label for="detect-dato">Detect anomaly:</label>
+            <input type="text" id="detect-dato" name="detect-dato" class="detect-input" required oninput="validateInput(event)">
+            <button type="submit" class="detect-btn">Detect</button>
+        </form>
+    
+    </div>
+    
+    
+
+    <div id="result"></div>
+
+    <div>
+        <button class="reset-btn" onclick="resetDatabase()">Reset Database</button>
+    <div/>
+
+    <script>
+        document.getElementById('hostname').innerHTML = 'Hostname: ' + '{{ hostname }}';
+
+        function listValues() {
+            fetch('/listar')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerHTML = data;
+                });
+            return false;  // Prevent default form submission
+        }
+
+        function resetDatabase() {
+            fetch('/reset')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerHTML = data;
+                });
+            return false;  // Prevent default form submission
+        }
+
+        function validateInput(event) {
+            const inputElement = event.target;
+            const inputValue = inputElement.value.trim();
+    
+            // Use a regular expression to allow only numeric values
+            const numericRegex = /^[0-9]*$/;
+    
+            if (!numericRegex.test(inputValue)) {
+                // If the input is not numeric, remove non-numeric characters
+                inputElement.value = inputValue.replace(/[^0-9]/g, '');
+            }
+        }
+    
+        function addNewValue() {
+            const newValue = document.getElementById('dato').value;
+            if (newValue.trim() === '') {
+                return false; // Prevent form submission if the input is empty
+            }
+    
+            fetch(`/nuevo?dato=${newValue}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerHTML = data;
+                    // Clear the input field after submitting
+                    document.getElementById('dato').value = '';
+                    // Focus on the input field again
+                    document.getElementById('dato').focus();
+                });
+            return false;  // Prevent default form submission
+        }
+
+        function detectAnomaly() {
+            const detectValue = document.getElementById('detect-dato').value;
+            if (detectValue.trim() === '') {
+                return false; // Prevent form submission if the input is empty
+            }
+        
+            fetch(`/detectar?dato=${detectValue}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the detection result
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `Anomaly Detected for <b>${detectValue}<b/>: ${data.anomalia}`;
+        
+                    // Show measurements if available
+                    if (data.mediciones) {
+                        resultDiv.innerHTML += '<br><strong>Measurements:</strong><ul>';
+                        data.mediciones.forEach(measurement => {
+                            // Format the value to be a number, from [b"1"] to 1
+                            measurement.valor = Number(measurement.valor.replace(/[^0-9.-]+/g,""));
+                            resultDiv.innerHTML += `<li>Time: ${measurement.time}, Temperature: ${measurement.valor}</li>`;
+                        });
+                        resultDiv.innerHTML += '</ul>';
+                    }
+        
+                    // Clear the input field after submitting
+                    document.getElementById('detect-dato').value = '';
+                    // Focus on the input field again
+                    document.getElementById('detect-dato').focus();
+                });
+        
+            return false;  // Prevent default form submission
+        }
+        
+
+        function addRandomValues() {
+        fetch('/add_one_hundred_values')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = data.result;
+            });
+        return false;  // Prevent default form submission
+    }
+    </script>
+</body>
+</html>
