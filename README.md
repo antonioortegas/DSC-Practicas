@@ -1,4 +1,4 @@
-# DSC-Practicas
+# DSC-Prácticas
 
 Las diferentes prácticas se han tratado como proyectos independientes, por lo que cada una de ellas es autocontenida y no tiene dependencias con las demás.
 
@@ -6,7 +6,7 @@ Cada una de las prácticas tiene los archivos necesarios para su ejecución, as�
 
 A continuación, se describen las instrucciones para ejecutar cada una de las prácticas.
 
-## Practica 1
+## Práctica 1
 
 El propósito principal de esta práctica es desarrollar y aplicar modelos de Machine Learning para detectar posibles anomalías en una serie temporal de temperaturas. Se explorarán tres enfoques: LSTM, autoencoders y Isolation Forest. Cada uno de estos métodos ofrece distintas perspectivas y técnicas para identificar patrones inusuales en los datos.
 
@@ -18,7 +18,7 @@ El propósito principal de esta práctica es desarrollar y aplicar modelos de Ma
 - Ejecutar el comando `pip install -r practica1/requirements.txt` para instalar las librerías necesarias (esto se puede hacer en un entorno virtual)
 - Ejecutar cualquiera de los archivos ".py" correspondientes a cada uno de los modelos (LSTM, autoencoders o Isolation Forest)
 
-## Practica 2
+## Práctica 2
 
 El propósito principal de esta práctica es una introducción a Docker (Comandos básicos, creación de contenedores, fichero compose, swarms...). Crearemos una imagen de Docker con un modelo de Machine Learning y la desplegaremos en un contenedor. El modelo de Machine Learning será el mismo que el de la práctica 1.
 La idea es que el modelo de Machine Learning se ejecute en un contenedor de Docker, y que se pueda acceder a él a través de una API REST. Podremos consultar los datos almacenados, introducir nuevos datos y obtener predicciones.
@@ -32,15 +32,17 @@ Por último, se ha utilizado un visualizador de contenedores para comprobar que 
 
 - Se necesita **tener instalado Docker Desktop**
 - Se necesita **tener instalado Python** (en mi caso ha utilizado 3.11.3)
+- **Clonar el repositorio** o descargar los archivos en una carpeta local.
+- **Abrir una terminal y situarse en la raíz del repositorio**.
 - Ejecutar el comando
 **`pip install -r practica2/requirements.txt`**
   para instalar las librerías necesarias (esto se puede hacer en un entorno virtual)
-- **Clonar el repositorio** o descargar los archivos en una carpeta local.
-- **Abrir una terminal y situarse en la raíz del repositorio**. (Una vez llegados a este punto, para probar la aplicación basta con ejecutar el comando
+- Una vez llegados a este punto, para probar la aplicación basta con ejecutar el comando ejecutar
 **`docker stack deploy -c practica2/docker-compose.yml NOMBRE`**
-para ejecutar el stack de Docker
+para ejecutar el stack de Docker (esta operación puede tardar, ya que deberá descargar todas las imágenes y construir los contenedores).
+
 Accedemos a la aplicación a través de **`localhost:4000`**
-Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`).
+Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`.
 
 A continuación se describen las diferentes opciones para ejecutar la aplicación de forma local.
 
@@ -59,4 +61,4 @@ A continuación se describen las diferentes opciones para ejecutar la aplicació
   - *4.- Ejecutar todo con un stack de Docker **(RECOMENDADO)***.
     - Ejecutar el comando `docker stack deploy -c practica2/docker-compose.yml NOMBRE` para ejecutar el stack de Docker. Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`. Esto creará un contenedor de Redis, un contenedor de Grafana, un contenedor del visualizador, y 5 replicas de nuestro modelo de Machine Learning. Con esto se establece un balanceo de carga entre los 5 contenedores de nuestra aplicación, que vuelven a ponerse en marcha en caso de que alguno de ellos falle automáticamente.
 
-**Una vez que la aplicación está en marcha, podemos acceder a ella a través de ``localhost:80`` o ``localhost:4000``** (dependiendo de la opción que hayamos elegido). En caso de que hayamos usado Docker Compose o Docker Stack (o iniciado sus contenedores independientemente), podemos acceder a Grafana a través de ``localhost:3000`` y al visualizador de contenedores a través de ``localhost:8080``.
+**Una vez que la aplicación está en marcha, podemos acceder a ella a través de ``localhost:80`` o ``localhost:4000``** (dependiendo de la opción que hayamos elegido). En caso de que hayamos usado Docker Compose o Docker Stack (o iniciado sus contenedores independientemente), podemos acceder a Grafana a través de ``localhost:3000`` y al visualizador de contenedores a través de ``localhost:8080``, así como hacer consultas a Redis a través de ``localhost:6379``.
