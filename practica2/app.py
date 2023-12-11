@@ -10,7 +10,6 @@ import tensorflow as tf
 from redis import Redis, RedisError
 from flask import Flask, request, render_template, jsonify
 from datetime import datetime
-from subprocess import run
 from keras.models import load_model
 
 # Connect to Redis
