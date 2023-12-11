@@ -30,8 +30,8 @@ Por último, se ha utilizado un visualizador de contenedores para comprobar que 
 
 **Instrucciones para ejecutar el código:**
 
-- Se necesita **tener instalado Docker Desktop**
-- Se necesita **tener instalado Python** (en mi caso ha utilizado 3.11.3)
+- Se necesita **tener Docker Desktop instalado y Docker Engine en funcinamiento** en caso de querer ejecutar los contenedores.
+- Se necesita **tener instalado Python** (en mi caso ha utilizado 3.11.3) en caso de querer ejecutar la aplicación de forma local desde el archivo python.
 - **Clonar el repositorio** o descargar los archivos en una carpeta local.
 - **Abrir una terminal y situarse en la raíz del repositorio**.
 - Ejecutar el comando para instalar las librerías necesarias (esto se puede hacer en un entorno virtual)
@@ -46,6 +46,9 @@ pip install -r practica2/requirements.txt
 docker swarm init
 docker stack deploy -c practica2/docker-compose.yml NOMBRE
 ```
+
+> [!TIP]
+> Podemos situarnos en la carpeta practica2 y ejecutar el comando `docker-compose pull` para descargar las imágenes necesarias por separado antes de ejecutar el stack.
 
 - Accedemos a la aplicación a través de
 
