@@ -34,13 +34,24 @@ Por último, se ha utilizado un visualizador de contenedores para comprobar que 
 - Se necesita **tener instalado Python** (en mi caso ha utilizado 3.11.3)
 - **Clonar el repositorio** o descargar los archivos en una carpeta local.
 - **Abrir una terminal y situarse en la raíz del repositorio**.
-- Ejecutar el comando
-```pip install -r practica2/requirements.txt```
-  para instalar las librerías necesarias (esto se puede hacer en un entorno virtual)
-- Una vez llegados a este punto, para probar la aplicación basta con ejecutar el comando ejecutar
-```docker stack deploy -c practica2/docker-compose.yml NOMBRE```
-para ejecutar el stack de Docker (esta operación puede tardar, ya que deberá descargar todas las imágenes y construir los contenedores).
-- Accedemos a la aplicación a través de ```localhost:4000```
+- Ejecutar el comando para instalar las librerías necesarias (esto se puede hacer en un entorno virtual)
+
+```terminal
+pip install -r practica2/requirements.txt
+```
+
+- Una vez llegados a este punto, para probar la aplicación basta con añadir nuestra máquina como swarm, y ejecutar el comando para desplegar el stack de Docker (esta operación puede tardar, ya que deberá descargar todas las imágenes y construir los contenedores).
+
+```text
+docker swarm init
+docker stack deploy -c practica2/docker-compose.yml NOMBRE
+```
+
+- Accedemos a la aplicación a través de
+
+```text
+localhost:4000
+```
 
 Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`.
 
