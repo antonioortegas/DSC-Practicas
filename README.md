@@ -28,6 +28,7 @@ Durante el proceso de desarrollo, se ha utilizado un contenedor de Redis preexis
 También usamos Grafana para visualizar los datos de Redis.
 Por último, se ha utilizado un visualizador de contenedores para comprobar que todo funciona correctamente.
 
+```text
 **Instrucciones para ejecutar el código:**
 
 - Se necesita **tener instalado Docker Desktop**
@@ -40,11 +41,12 @@ Por último, se ha utilizado un visualizador de contenedores para comprobar que 
 - Una vez llegados a este punto, para probar la aplicación basta con ejecutar el comando ejecutar
 **`docker stack deploy -c practica2/docker-compose.yml NOMBRE`**
 para ejecutar el stack de Docker (esta operación puede tardar, ya que deberá descargar todas las imágenes y construir los contenedores).
+```
 
 Accedemos a la aplicación a través de **`localhost:4000`**
 Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`.
 
-A continuación se describen las diferentes opciones para ejecutar la aplicación de forma local.
+[A continuación se describen las diferentes opciones para ejecutar y compilar la aplicación de forma local.]
 
 - Para ejecutar nuestra practica tenemos cuatro opciones (la primera opción es la recomendable durante el desarrollo mientras estamos haciendo cambios, el resto son para comprobar que todo funciona correctamente):
   - *1.- Ejecutar nuestra aplicación como un archivo python y conectarla a Redis.*
