@@ -1,9 +1,5 @@
 # DSC-Prácticas
 
-Las diferentes prácticas se han tratado como proyectos independientes, por lo que cada una de ellas es autocontenida y no tiene dependencias con las demás.
-
-Cada una de las prácticas tiene los archivos necesarios para su ejecución, así como un archivo requirements.txt con las librerías necesarias.
-
 A continuación, se describen las instrucciones para ejecutar cada una de las prácticas.
 
 ## Práctica 1
