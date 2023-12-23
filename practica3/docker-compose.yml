@@ -1,0 +1,96 @@
+version: "3"
+services:
+  web:
+    image: aortegasdev/practica2
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4000:80"
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+  redis:
+    image: redislabs/redistimeseries
+    ports:
+      - "6379:6379"   
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - redis
+    environment:
+      GF_INSTALL_PLUGINS: redis-datasource
+    networks:
+      - webnet
+  zookeeper:
+    image: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+    networks:
+      - webnet
+  zkapp1:
+    image: aortegasdev/practica3
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      - APP_ID=1
+      - HOST=zookeeper
+    depends_on:
+      - zookeeper
+      - web
+    networks:
+      - webnet
+  zkapp2:
+    image: aortegasdev/practica3
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      - APP_ID=2
+      - HOST=zookeeper
+    depends_on:
+      - zookeeper
+      - web
+    networks:
+      - webnet
+  zkapp3:
+    image: aortegasdev/practica3
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      - APP_ID=3
+      - HOST=zookeeper
+    depends_on:
+      - zookeeper
+      - web
+    networks:
+      - webnet
+volumes:
+  grafana_data:
+networks:
+  webnet:
