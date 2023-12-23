@@ -23,6 +23,7 @@ El propósito principal de esta práctica es desarrollar y aplicar modelos de Ma
 El propósito principal de esta práctica es una introducción a Docker (Comandos básicos, creación de contenedores, fichero compose, swarms...). Crearemos una imagen de Docker con un modelo de Machine Learning y la desplegaremos en un contenedor. El modelo de Machine Learning será el mismo que el de la práctica 1.
 La idea es que el modelo de Machine Learning se ejecute en un contenedor de Docker, y que se pueda acceder a él a través de una API REST. Podremos consultar los datos almacenados, introducir nuevos datos y obtener predicciones.
 La imagen de Docker se creará a partir de un Dockerfile, desde la imagen base de Python.
+[DockerHub](https://hub.docker.com/repository/docker/aortegasdev/practica2)
 Para el desarrolo de nuestra aplicación, utilizaremos Flask, que es un framework de Python para crear aplicaciones web.
 Durante el proceso de desarrollo, se ha utilizado un contenedor de Redis preexistente, preparado para tratar con datos de series temporales, por lo que nos hemos centrado en el desarrollo de la aplicación web y en la conexión con el contenedor de Redis.
 También usamos Grafana para visualizar los datos de Redis.
@@ -76,3 +77,37 @@ Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`.
     - Ejecutar el comando `docker stack deploy -c practica2/docker-compose.yml NOMBRE` para ejecutar el stack de Docker. Para parar el stack de Docker, podemos hacer `docker stack rm NOMBRE`. Esto creará un contenedor de Redis, un contenedor de Grafana, un contenedor del visualizador, y 5 replicas de nuestro modelo de Machine Learning. Con esto se establece un balanceo de carga entre los 5 contenedores de nuestra aplicación, que vuelven a ponerse en marcha en caso de que alguno de ellos falle automáticamente. (Asegurarse de usar `docker swarm init` para iniciar nuestra máquina de forma que pueda desplegar stacks de docker).
 
 **Una vez que la aplicación está en marcha, podemos acceder a ella a través de ``localhost:80`` o ``localhost:4000``** (dependiendo de la opción que hayamos elegido). En caso de que hayamos usado Docker Compose o Docker Stack (o iniciado sus contenedores independientemente), podemos acceder a Grafana a través de ``localhost:3000`` y al visualizador de contenedores a través de ``localhost:8080``, así como hacer consultas a Redis a través de ``localhost:6379``.
+
+## Práctica 3
+
+El propósito principal de esta práctica es una introducción a Zookeeper. Crearemos varios nodos que enviarán una media de las temperaturas generadas a la API REST de la práctica 2.
+El contenedor desarrollado se encuentra en Docker Hub
+[DockerHub](https://hub.docker.com/repository/docker/aortegasdev/practica3)
+
+**Instrucciones para ejecutar el código:**
+
+- Se necesita **tener Docker Desktop instalado y Docker Engine en funcinamiento**.
+- **Clonar el repositorio** o descargar los archivos en una carpeta local.
+- **Abrir una terminal y situarse en la raíz del repositorio**.
+- **Desplegar el stack de la práctica 2**.
+
+```text
+docker swarm init
+docker stack deploy -c practica2/docker-compose.yml NOMBRE
+```
+
+- La app se encontrará en **``localhost:4000``**.
+- **Desplejar un contenedor de Zookeeper**.
+
+```text
+docker run --name some-zookeeper --restart always -d -p 2181:2181 zookeeper
+```
+
+- **Desplegar uno o varios contenedores de la práctica 3**.
+
+```text
+docker run -e APP_ID=id aortegasdev/practica3
+```
+
+> [!TIP]
+> Para ejecutar varios contenedores de la práctica 3, ejecutaremos el comando `docker run -e APP_ID=id aortegasdev/practica3` varias veces, cambiando el id por uno diferente cada vez.

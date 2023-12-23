@@ -77,7 +77,6 @@ election_thread = threading.Thread(target=election_func, daemon=True)
 # Start the thread
 election_thread.start()
 
-# Define a function that runs when an application becomes the leader
     
 # Periodically generate a new measurement and replace the previous one in the node
 while True:
