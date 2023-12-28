@@ -99,10 +99,11 @@ docker stack deploy -c practica2/docker-compose.yml NOMBRE
 docker run --name some-zookeeper --restart always -d -p 2181:2181 zookeeper
 ```
 
-- **Desplegar uno o varios contenedores de la práctica 3**.
+- **Desplegar uno o varios contenedores de la práctica 3, o bien ejecutar el script localmente**.
 
 ```text
 docker run -e APP_ID=id aortegasdev/practica3
+python -u practica3/zookeeper.py
 ```
 
 > [!TIP]

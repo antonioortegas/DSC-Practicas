@@ -15,9 +15,15 @@ def interrupt_handler(signal, frame):
 signal.signal(signal.SIGINT, interrupt_handler)
 
 # Create an identifier for the application from an env variable
-id = os.getenv("APP_ID")
+# Check if we can obtain it from an environment variable
+# If not, prompt the user to enter it
+if os.getenv("APP_ID") is None:
+    id = input("Enter the application identifier: ")
+    host = "localhost"
+else:
+    id = os.getenv("APP_ID")
+    host = "host.docker.internal"
 
-host = "host.docker.internal"
 # Create a Kazoo client and connect it to the Zookeeper server
 client = KazooClient(hosts=host + ":2181")
 client.start()
